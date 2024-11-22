@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+    font-size: 16px;
+    font-family: "Poppins", serif;
+    font-weight: 600;
+
+    font-size: calc(1rem + .3vw);
+
+}
+.blogdetail-container{
+    width: 100%;
+    min-height: 1vh;
+    display: flex;
+    justify-content: center;
+
+}
+.blogdetail-container .blog-wrapper{
+    width: 90%;
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+}
+.blogdetail-container .blog-wrapper .blogdetail-image{
+    width: 40%;
+    height: 350px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.blogdetail-container .blog-wrapper .blogdetail-image img{
+    width: 100%;
+    height: 100%;
+}
+.blog-wrapper .blogdetail-content-box{
+    width: 60%;
+    min-height: 1vh;
+}
+.blog-wrapper .blogdetail-content-box .blogdetail-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.blog-wrapper .blogdetail-content-box .blogdetail-header h3{
+    font-family: "Poppins", serif;
+    font-weight: 600;
+
+    font-size: calc(1.7rem + 1vw);
+
+}
+.blog-wrapper .blogdetail-content-box .blogdetail-header p{
+    font-family: "Poppins", serif;
+    font-weight: 300;
+
+    font-size: calc(.5rem + .5vw);
+
+}
+.blog-wrapper .blogdetail-content-box .blogdetail-content{
+    padding: 5px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.blog-wrapper .blogdetail-content-box .blogdetail-content p{
+    font-family: "Poppins", serif;
+    font-weight: 300;
+
+    font-size: calc(.8rem + .2vw);
+
+}
+.blog-wrapper .blogdetail-content-box .blogdetail-content .blockquote{
+    padding-left: 40px;
+}
+.blog-wrapper .blogdetail-content-box .blogdetail-content .blockquote p{
+    font-style: italic;
+    border-left: 4px solid #C7A17A;
+    padding: 10px;
+}
+@media (width <= 520px){
+    .blogdetail-container .blog-wrapper{
+        flex-direction: column;
+    }
+    .blogdetail-container .blog-wrapper .blogdetail-image {
+        width: 100%;
+        height: 300px;
+        padding: 0;
+    }
+    .blog-wrapper .blogdetail-content-box {
+        width: 100%;
+    }
+    .blog-wrapper .blogdetail-content-box .blogdetail-header p{
+        font-size: calc(.7rem + .5vw);
+
+    }
+    .blog-wrapper .blogdetail-content-box .blogdetail-content p {
+        font-size: calc(1rem + .2vw);
+
+    }
+}

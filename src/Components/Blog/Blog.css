@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+    font-size: 16px;
+}
+
+.blogSwiper.swiper {
+    width: 90%;
+    height: 89vh;
+}
+
+.blog-container    .swiper  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.blog-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+    background-color: #f6f6f6;
+}
+.blog-header h2{
+    font-family: "Poppins", serif;
+    font-weight: 600;
+
+    font-size: calc(1rem + 1vw);
+}
+.blogSwiper .swiper-button-prev,
+.blogSwiper .swiper-button-next {
+    background-color: #fff;
+    color: #060606;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+}
+.blogSwiper .swiper-button-prev {
+    transform: translateX(-73px);
+}
+.blogSwiper .swiper-button-next {
+    transform: translateX(73px);
+}
+.blogSwiper .swiper-button-prev:hover,
+.blogSwiper .swiper-button-next:hover {
+    background-color: #e7b360;
+    color: #fff;
+}
+.blogSwiper:hover .swiper-button-prev,
+.blogSwiper:hover .swiper-button-next {
+    transform: translateX(0);
+    opacity: 1;
+}
+.blogSwiper .swiper-button-prev:after, .swiper-button-next:after{
+  font-size: calc(1rem);
+}
+@media (max-width : 610px){
+    .blog-header h2{
+    
+        font-size: calc(1.5rem + 1vw);
+    }
+}
