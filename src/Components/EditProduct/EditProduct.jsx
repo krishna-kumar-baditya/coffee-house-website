@@ -1,10 +1,8 @@
 import {
-    Alert,
     Box,
     Button,
     CardMedia,
     CircularProgress,
-    Slide,
     TextField,
     Typography,
 } from "@mui/material";
@@ -32,14 +30,11 @@ export default function EditProduct() {
     const watchImage = watch("image");
     const newImage =
         watchImage && watchImage[0] ? URL.createObjectURL(watchImage[0]) : null;
-    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         dispatch(editproductData(id));
     }, [id]);
     useEffect(() => {
-        // console.log("editProductData", editProductData);
-
         if (editProductData !== null) {
             setValue("title", editProductData?.title);
             setValue("description", editProductData?.description);
@@ -62,12 +57,32 @@ export default function EditProduct() {
             setTimeout(() => navigate("/showproductlist"), 2000)
         );
     };
-    
+    const validateFile = (fileList) => {
+        const allowedTypes = ["image/jpeg", "image/png"];
+        const maxSize = 5 * 1024 * 1024;
+
+        if (!fileList || fileList.length === 0) {
+            return true;
+        }
+
+        const file = fileList[0];
+
+        if (!allowedTypes.includes(file.type)) {
+            return "Invalid file type. Only JPEG and PNG are allowed.";
+        }
+
+        if (file.size > maxSize) {
+            return "File size exceeds the 5MB limit.";
+        }
+
+        return true;
+    };
+
     return (
         <>
             <Box
                 sx={{
-                    backgroundColor: "rgba(111, 78, 55)", 
+                    backgroundColor: "rgba(111, 78, 55)",
                     width: "100%",
                     minHeight: "92vh",
                     backgroundRepeat: "no-repeat",
@@ -99,8 +114,8 @@ export default function EditProduct() {
                             border: "2px solid white",
                             p: 4.5,
                             borderRadius: "15px",
-                            backgroundColor: "rgb(132 82 48 / 70%)", 
-                            backdropFilter: "blur(10px)", 
+                            backgroundColor: "rgb(132 82 48 / 70%)",
+                            backdropFilter: "blur(10px)",
                             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
                         }}
                         onSubmit={handleSubmit(onSubmit)}
@@ -129,21 +144,21 @@ export default function EditProduct() {
                                 fullWidth
                                 sx={{
                                     "& .MuiOutlinedInput-root": {
-                                        color: "white", 
+                                        color: "white",
                                         "& fieldset": {
-                                            borderColor: "white", 
+                                            borderColor: "white",
                                         },
                                         "&:hover fieldset": {
-                                            borderColor: "white", 
+                                            borderColor: "white",
                                         },
                                         "&.Mui-focused fieldset": {
-                                            borderColor: "white", 
+                                            borderColor: "white",
                                         },
                                     },
                                     "& .MuiInputLabel-root": {
-                                        color: "white", 
+                                        color: "white",
                                         "&.Mui-focused": {
-                                            color: "white", 
+                                            color: "white",
                                         },
                                     },
                                     "& .MuiInputBase-input::placeholder": {
@@ -175,21 +190,21 @@ export default function EditProduct() {
                                 fullWidth
                                 sx={{
                                     "& .MuiOutlinedInput-root": {
-                                        color: "white", 
+                                        color: "white",
                                         "& fieldset": {
-                                            borderColor: "white", 
+                                            borderColor: "white",
                                         },
                                         "&:hover fieldset": {
-                                            borderColor: "white", 
+                                            borderColor: "white",
                                         },
                                         "&.Mui-focused fieldset": {
-                                            borderColor: "white", 
+                                            borderColor: "white",
                                         },
                                     },
                                     "& .MuiInputLabel-root": {
-                                        color: "white", 
+                                        color: "white",
                                         "&.Mui-focused": {
-                                            color: "white", 
+                                            color: "white",
                                         },
                                     },
                                     "& .MuiInputBase-input::placeholder": {
@@ -220,21 +235,21 @@ export default function EditProduct() {
                                 fullWidth
                                 sx={{
                                     "& .MuiOutlinedInput-root": {
-                                        color: "white", 
+                                        color: "white",
                                         "& fieldset": {
-                                            borderColor: "white", 
+                                            borderColor: "white",
                                         },
                                         "&:hover fieldset": {
-                                            borderColor: "white", 
+                                            borderColor: "white",
                                         },
                                         "&.Mui-focused fieldset": {
-                                            borderColor: "white", 
+                                            borderColor: "white",
                                         },
                                     },
                                     "& .MuiInputLabel-root": {
-                                        color: "white", 
+                                        color: "white",
                                         "&.Mui-focused": {
-                                            color: "white", 
+                                            color: "white",
                                         },
                                     },
                                     "& .MuiInputBase-input::placeholder": {
@@ -242,11 +257,16 @@ export default function EditProduct() {
                                         opacity: 1,
                                     },
                                 }}
-                                {...register("image")}
+                                {...register("image", {
+                                    validate: validateFile,
+                                })}
                             />
-                            <span style={{ color: "red" }}>
-                                {errors.image?.message}
-                            </span>
+                            {watch("image")?.length > 0 &&
+                                errors.image?.message && (
+                                    <span style={{ color: "red" }}>
+                                        {errors.image.message}
+                                    </span>
+                                )}
                         </Grid>
 
                         <Button
@@ -256,9 +276,8 @@ export default function EditProduct() {
                             variant="contained"
                             type="submit"
                             fullWidth
-                            onClick={() => setOpen(true)}
                         >
-                            {loading ? <CircularProgress /> : 'Update'}
+                            {loading ? <CircularProgress /> : "Update"}
                         </Button>
                     </Box>
 
@@ -273,10 +292,10 @@ export default function EditProduct() {
                             minHeight: "350px",
                             border: "2px solid white",
                             borderRadius: "15px",
-                            backgroundColor: "rgb(132 82 48 / 70%)", 
-                            backdropFilter: "blur(10px)", 
+                            backgroundColor: "rgb(132 82 48 / 70%)",
+                            backdropFilter: "blur(10px)",
                             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
-                            p : 4
+                            p: 4,
                         }}
                     >
                         <Box
@@ -291,7 +310,7 @@ export default function EditProduct() {
                                 variant="h4"
                                 sx={{
                                     color: "white",
-                                    textAlign : 'center'
+                                    textAlign: "center",
                                 }}
                             >
                                 Previous Image
@@ -304,14 +323,14 @@ export default function EditProduct() {
                                     sx={{
                                         maxWidth: "200px",
                                         height: "200px",
-                                        objectFit: 'contain',
+                                        objectFit: "contain",
                                         borderRadius: "20px",
                                     }}
                                 />
                             ) : (
                                 <Box
                                     sx={{
-                                        maxWidth: '200px',
+                                        maxWidth: "200px",
                                         height: "200px",
                                         bgcolor: "#f0f0f0",
                                         display: "flex",
@@ -330,10 +349,12 @@ export default function EditProduct() {
                                 flexDirection: "column",
                                 gap: "14px",
                                 width: { xs: 200 },
-
                             }}
                         >
-                            <Typography variant="h4" sx={{ color: "white" ,textAlign : 'center'}}>
+                            <Typography
+                                variant="h4"
+                                sx={{ color: "white", textAlign: "center" }}
+                            >
                                 Current Image
                             </Typography>
                             {newImage ? (

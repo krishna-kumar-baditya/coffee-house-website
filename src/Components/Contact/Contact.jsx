@@ -12,8 +12,18 @@ import {
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import LocalPhoneSharpIcon from "@mui/icons-material/LocalPhoneSharp";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function Contact() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+    const onSubmit = (data) => {
+        toast.success("Form submitted");
+    };
     return (
         <>
             <Box className="contact-container">
@@ -47,31 +57,57 @@ export default function Contact() {
                             </ListItem>
                         </List>
                     </Box>
-                    <Box className="contact-form">
-                        <Box className='contact-heading'>
-                            <Typography variant="h4">Enter Your Details</Typography>
-                            <Typography variant="body1">Get In Touch</Typography>
-
+                    <Box className="contact-form" >
+                        <Box className="contact-heading">
+                            <Typography variant="h4">
+                                Enter Your Details
+                            </Typography>
+                            <Typography variant="body1">
+                                Get In Touch
+                            </Typography>
                         </Box>
-                        <Box className="form">
+                        <Box className="form" component={"form"} onSubmit={handleSubmit(onSubmit)}>
                             <TextField
                                 type="text"
                                 placeholder="Enter Your Name"
                                 variant="outlined"
+                                {...register("name", {
+                                    required: "Enter your name",
+                                })}
                             />
+                                <span style={{ color: "red" }}>
+                                    {errors.name?.message}
+                                </span>
                             <TextField
                                 type="email"
                                 placeholder="Enter Your Email"
                                 variant="outlined"
+                                {...register("email", {
+                                    required: "Enter your email",
+                                })}
                             />
+                            <span style={{ color: "red" }}>
+                                {errors.email?.message}
+                            </span>
+
                             <TextField
                                 type="textarea"
                                 multiline
                                 rows={4}
                                 placeholder="Write Your Message Here"
                                 variant="outlined"
+                                {...register("message", {
+                                    required: "Enter your message",
+                                })}
                             />
-                            <Button variant="contained" className="btn">
+                                <span style={{ color: "red" }}>
+                                    {errors.message?.message}
+                                </span>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                className="btn"
+                            >
                                 Submit
                             </Button>
                         </Box>

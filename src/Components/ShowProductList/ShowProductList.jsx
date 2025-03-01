@@ -66,7 +66,8 @@ export default function ShowProductList() {
                     py: 2,
                 }}
             >
-                {products?.length ? (
+                {products?.length ?
+                (
                     <>
                         <Typography
                             variant="h3"

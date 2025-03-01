@@ -16,14 +16,11 @@ root.render(
             <App />
             <ToastContainer
                 position="top-right"
-                autoClose={1500}
+                autoClose={1000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
                 rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
                 theme="light"
             />
             <ToastContainer />

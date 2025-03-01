@@ -1,10 +1,8 @@
 import {
-    Alert,
     Box,
     Button,
     CircularProgress,
     InputLabel,
-    Slide,
     TextField,
     Typography,
 } from "@mui/material";
@@ -16,7 +14,6 @@ import { useForm } from "react-hook-form";
 import { login } from "../../Redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 export default function Login() {
     const {
@@ -27,11 +24,10 @@ export default function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { loading, redirectHome, isLogin } = useSelector(
+    const { loading, redirectHome } = useSelector(
         (state) => state.authKey
     );
 
-    const [open, setOpen] = useState(false);
 
     const onSubmit = (data) => {
         console.log("Registration data", data);
@@ -55,7 +51,7 @@ export default function Login() {
 
     useEffect(
         () => {
-            setTimeout(() => redirectUser(), 3000);
+            setTimeout(() => redirectUser(), 2000);
         },
         // eslint-disable-next-line
         [redirectHome]
@@ -217,7 +213,7 @@ export default function Login() {
                             sx={{
                                 backgroundColor: "#ab6832",
                             }}
-                            onClick={() => setOpen(true)}
+                            disabled={loading}
                         >
                             {loading ? <CircularProgress/> : 'Login'}
                         </Button>

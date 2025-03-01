@@ -1,20 +1,17 @@
 import {
-    Alert,
     Box,
     Button,
     CardMedia,
     CircularProgress,
-    Slide,
     TextField,
     Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-
 import { useForm } from "react-hook-form";
 import { createProduct } from "../../Redux/crudSlice";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 export default function CreateProduct() {
     const {
         register,
@@ -29,18 +26,36 @@ export default function CreateProduct() {
     const watchImage = watch("image");
     const newImage =
         watchImage && watchImage[0] ? URL.createObjectURL(watchImage[0]) : null;
-    const [open, setOpen] = useState(false);
-
-    console.log("create product newImage", newImage);
 
     const onSubmit = (data) => {
         let formData = new FormData();
         formData.append("title", data.title);
         formData.append("description", data.description);
-        formData.append("image", data?.image[0]);
+        formData.append("image", data.image[0]);
         dispatch(createProduct(formData)).then(() =>
             setTimeout(() => navigate("/showproductlist"), 2000)
         );
+    };
+
+    const validateFile = (fileList) => {
+        const allowedTypes = ["image/jpeg", "image/png"];
+        const maxSize = 5 * 1024 * 1024; 
+
+        if (!fileList || fileList.length === 0) {
+            return "Please upload a file.";
+        }
+
+        const file = fileList[0];
+
+        if (!allowedTypes.includes(file.type)) {
+            return "Invalid file type. Only JPEG and PNG are allowed.";
+        }
+
+        if (file.size > maxSize) {
+            return "File size exceeds the 5MB limit.";
+        }
+
+        return true; 
     };
 
     return (
@@ -76,8 +91,8 @@ export default function CreateProduct() {
                             border: "2px solid white",
                             p: 4,
                             borderRadius: "15px",
-                            backgroundColor: "#ab6832d4", 
-                            backdropFilter: "blur(10px)", 
+                            backgroundColor: "#ab6832d4",
+                            backdropFilter: "blur(10px)",
                             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
                         }}
                         onSubmit={handleSubmit(onSubmit)}
@@ -86,68 +101,44 @@ export default function CreateProduct() {
                             variant="h4"
                             sx={{
                                 color: "white",
-                                fontSize : {xs : 'calc(1rem + 1vw)',sm : '2rem'},
-                                fontWeight : '600'
+                                fontSize: {
+                                    xs: "calc(1rem + 1vw)",
+                                    sm: "2rem",
+                                },
+                                fontWeight: "600",
                             }}
                         >
                             Add Product
                         </Typography>
 
                         <Grid size={12}>
-                            <Typography
-                                sx={{
-                                    color: "white",
-                                }}
-                            >
+                            <Typography sx={{ color: "white" }}>
                                 Title
                             </Typography>
-
                             <TextField
-                                id="outlined-basic"
                                 placeholder="Title"
                                 type="text"
                                 fullWidth
                                 sx={{
                                     "& .MuiOutlinedInput-root": {
-                                        color: "white", 
-                                        "& fieldset": {
-                                            borderColor: "white", 
-                                        },
-                                        "&:hover fieldset": {
-                                            borderColor: "white", 
-                                        },
-                                        "&.Mui-focused fieldset": {
-                                            borderColor: "white", 
-                                        },
-                                    },
-                                    "& .MuiInputLabel-root": {
-                                        color: "white", 
-                                        "&.Mui-focused": {
-                                            color: "white", 
-                                        },
-                                    },
-                                    "& .MuiInputBase-input::placeholder": {
                                         color: "white",
-                                        opacity: 1,
+                                        "& fieldset": { borderColor: "white" },
                                     },
                                 }}
                                 {...register("title", {
-                                    required: "enter title ",
+                                    required: "Enter a title.",
                                 })}
                             />
-                            <span>{errors.title?.message}</span>
+                            <span style={{ color: "red" }}>
+                                {errors.title?.message}
+                            </span>
                         </Grid>
+
                         <Grid size={12}>
-                            <Typography
-                                sx={{
-                                    color: "white",
-                                }}
-                            >
+                            <Typography sx={{ color: "white" }}>
                                 Description
                             </Typography>
-
                             <TextField
-                                id="outlined-basic"
                                 placeholder="Description"
                                 type="text"
                                 multiline
@@ -155,70 +146,35 @@ export default function CreateProduct() {
                                 fullWidth
                                 sx={{
                                     "& .MuiOutlinedInput-root": {
-                                        color: "white", 
-                                        "& fieldset": {
-                                            borderColor: "white", 
-                                        },
-                                        "&:hover fieldset": {
-                                            borderColor: "white", 
-                                        },
-                                        "&.Mui-focused fieldset": {
-                                            borderColor: "white", 
-                                        },
-                                    },
-                                    "& .MuiInputLabel-root": {
-                                        color: "white", 
-                                        "&.Mui-focused": {
-                                            color: "white", 
-                                        },
-                                    },
-                                    "& .MuiInputBase-input::placeholder": {
                                         color: "white",
-                                        opacity: 1,
+                                        "& fieldset": { borderColor: "white" },
                                     },
                                 }}
                                 {...register("description", {
-                                    required: "enter description",
+                                    required: "Enter a description.",
                                 })}
                             />
-                            <span>{errors.description?.message}</span>
+                            <span style={{ color: "red" }}>
+                                {errors.description?.message}
+                            </span>
                         </Grid>
+
                         <Grid size={12}>
-                            <Typography
-                                sx={{
-                                    color: "white",
-                                }}
-                            >
+                            <Typography sx={{ color: "white" }}>
                                 Product Picture
                             </Typography>
-
                             <TextField
-                                id="outlined-basic"
-                                variant="outlined"
                                 type="file"
                                 fullWidth
                                 sx={{
                                     "& .MuiOutlinedInput-root": {
-                                        color: "white", 
-                                        "& fieldset": {
-                                            borderColor: "white", 
-                                        },
-                                        "&:hover fieldset": {
-                                            borderColor: "white", 
-                                        },
-                                        "&.Mui-focused fieldset": {
-                                            borderColor: "white", 
-                                        },
-                                    },
-                                    "& .MuiInputLabel-root": {
-                                        color: "white", 
-                                        "&.Mui-focused": {
-                                            color: "white", 
-                                        },
+                                        color: "white",
+                                        "& fieldset": { borderColor: "white" },
                                     },
                                 }}
                                 {...register("image", {
-                                    required: "Upload Picture",
+                                    required: "Upload a picture.",
+                                    validate: validateFile,
                                 })}
                             />
                             <span style={{ color: "red" }}>
@@ -230,14 +186,10 @@ export default function CreateProduct() {
                             variant="contained"
                             type="submit"
                             fullWidth
-                            onClick={() => setOpen(true)}
-                            sx={{
-                                backgroundColor: "#ab6832",
-                            }}
+                            sx={{ backgroundColor: "#ab6832" }}
                         >
                             {loading ? <CircularProgress /> : "Create Product"}
                         </Button>
-                        {loading && <CircularProgress />}
                     </Box>
 
                     <Box
@@ -247,13 +199,12 @@ export default function CreateProduct() {
                             alignItems: "center",
                             justifyContent: "center",
                             gap: "22px",
-                            // width: { xs: 250, sm: 350 },
-                            maxWidth : '350px',
+                            maxWidth: "350px",
                             minHeight: "350px",
                             border: "2px solid white",
                             borderRadius: "15px",
-                            backgroundColor: "#ab6832d4", 
-                            backdropFilter: "blur(10px)", 
+                            backgroundColor: "#ab6832d4",
+                            backdropFilter: "blur(10px)",
                             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
                             p: 4,
                         }}
@@ -262,15 +213,17 @@ export default function CreateProduct() {
                             variant="h4"
                             sx={{
                                 color: "white",
-                                textAlign : 'center',
-                                fontSize : {xs : 'calc(1rem + 1vw)',sm : '2rem'},
-                                fontWeight : '600'
-
+                                textAlign: "center",
+                                fontSize: {
+                                    xs: "calc(1rem + 1vw)",
+                                    sm: "2rem",
+                                },
+                                fontWeight: "600",
                             }}
                         >
                             Product Preview
                         </Typography>
-                        {newImage ? (
+                        {newImage && (
                             <CardMedia
                                 sx={{
                                     width: "90%",
@@ -282,12 +235,9 @@ export default function CreateProduct() {
                                 image={newImage}
                                 alt="New Product Image Preview"
                             />
-                        ) : (
-                            ""
                         )}
                     </Box>
                 </Box>
-                s
             </Box>
         </>
     );

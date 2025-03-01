@@ -1,11 +1,8 @@
 import {
-    Alert,
     Box,
     Button,
-    CardMedia,
     CircularProgress,
     InputLabel,
-    Slide,
     TextField,
     Typography,
 } from "@mui/material";
@@ -32,7 +29,6 @@ export default function Registration() {
     const { loading, redirectLogin, isRegister } = useSelector(
         (state) => state.authKey
     );
-    const [open, setOpen] = useState(false);
     const watchImage = watch("profile_pic");
     const newImage =
         watchImage && watchImage[0] ? URL.createObjectURL(watchImage[0]) : null;
@@ -365,7 +361,6 @@ export default function Registration() {
                         <Button
                             variant="contained"
                             type="submit"
-                            onClick={() => setOpen(true)}
                             sx={{
                                 backgroundColor: "#ab6832",
                             }}

@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 const initialState = {
     upload_status: "",
     loading: null,
-    // isLogin: !!localStorage.getItem("token"),
     isLogin: false,
     isRegister: false,
     redirectLogin: null,
@@ -114,6 +113,7 @@ export const authSlice = createSlice({
                 }
                 else if(payload.status === 201){
                     toast.error('Invalid Credentials')
+                    state.loading = false;
                 }
 
             })
