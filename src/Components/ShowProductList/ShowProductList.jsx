@@ -49,7 +49,6 @@ export default function ShowProductList() {
             })
         );
     };
-    // console.log(products.length);
 
     return (
         <>

@@ -35,19 +35,3 @@ html {
     flex-wrap: wrap;
     gap: 10px;
 }
-/* @media (width <= 1025px){
-    .gallery-container{
-        column-gap: 10px;
-    }
-}
-
-@media (width <= 769px){
-    .gallery-container{
-        column-gap: 10px;
-    }
-}
-@media (width <= 428px){
-    .gallery-container{
-        column-gap: 10px;
-    }
-} */
